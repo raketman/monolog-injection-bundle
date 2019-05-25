@@ -9,8 +9,8 @@ Configration example :
 
 	monolog_injection:
 	  #You can use namespaces to set visibility of this bundle 
-      namespaces:
-        - AppBundle
+      directories:
+        - %kernel.roor_dir%.'/../src'
 
 
 Usage example :
@@ -18,13 +18,13 @@ Usage example :
 	/**
      * @RaketmanLogger("validation")
      */
-    class V1 extends BaseType
+    class ValidationV1 extends BaseType
     {
         use RaketmanLoggerTrait;
 		
 Now you have property logger that contains monolog logger with channel "validation" (if exists) 
 
-	 $this->logger->debug("validation-v1", ["error" => "some-error"]);
+	 $this->logger->debug("validate-some-form", ["error" => "some-error"]);
 
 	
 ## Where to use

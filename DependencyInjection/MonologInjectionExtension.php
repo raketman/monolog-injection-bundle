@@ -13,6 +13,9 @@ class MonologInjectionExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        $container->setParameter('raketman.logger.namespaces', isset($config['namespaces']) ? $config['namespaces'] : []);
+        $container->setParameter(
+            'raketman.logger.directories',
+            (isset($config['directories']) && is_array($config['directories']) && count($config['directories'])) ? $config['directories'] : [$container->getParameter('kernel.root_dir') . '/../src']
+        );
     }
 }

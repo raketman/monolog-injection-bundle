@@ -1,6 +1,6 @@
 {
     "name": "raketman/monolog-injection-bundle",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Easy injection monolog into your classes",
     "keywords": ["monolog", "debug"],
     "type": "symfony-bundle",
@@ -17,6 +17,7 @@
     "require": {
         "php": ">=5.3.0",
         "symfony/monolog-bundle": "~2.0|~3.0",
-        "doctrine/annotations": "~1.0"
+        "doctrine/annotations": "~1.0",
+        "symfony/finder": "~2.2|~3.0|~4.0"
     }
 }

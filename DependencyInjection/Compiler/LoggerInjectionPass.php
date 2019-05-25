@@ -9,6 +9,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Raketman\Bundle\MonologInjectionBundle\Annotations\RaketmanLogger;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 
 class LoggerInjectionPass implements CompilerPassInterface
@@ -28,27 +30,29 @@ class LoggerInjectionPass implements CompilerPassInterface
         // Зарегаем сервис
         $container->setDefinition('raketman.logger.storage', $storage);
 
-        $namespaces = $container->getParameter('raketman.logger.namespaces');
+        $directories = $container->getParameter('raketman.logger.directories');
 
-        // ОБработаем все зарегистрированные классы
-        foreach (get_declared_classes() as $className) {
-            foreach ($namespaces as $namespace) {
-                if (!preg_match('/' . str_replace('/','\/', preg_quote($namespace)) . '/', $className)) {
-                    continue 2;
+        $finder = new Finder();
+        $finder->files()->name('*.php')->contains('@RaketmanLogger');
+
+        foreach ($directories as $directory) {
+            /** @var SplFileInfo $file */
+            foreach($finder->in($directory) as $file) {
+                $className = str_replace("/", "\\", explode('.', $file->getRelativePathname())[0]);
+                
+                // new $className;
+                $newRef = new \ReflectionClass($className);
+
+                /** @var RaketmanLogger $annotation */
+                $annotation = $reader->getClassAnnotation($newRef, 'Raketman\Bundle\MonologInjectionBundle\Annotations\RaketmanLogger');
+
+                if (is_null($annotation)) {
+                    continue;
                 }
+
+                $storage->addMethodCall('addLogger', [$newRef->getName(), new Reference($annotation->getLoggerServiceName())]);
             }
-
-            $newRef = new \ReflectionClass($className);
-            /** @var RaketmanLogger $annotation */
-            $annotation = $reader->getClassAnnotation($newRef, 'Raketman\Bundle\MonologInjectionBundle\Annotations\RaketmanLogger');
-
-            if (is_null($annotation)) {
-                continue;
-            }
-
-            $storage->addMethodCall('addLogger', [$className, new Reference($annotation->getLoggerServiceName())]);
         }
-
 
     }
 }

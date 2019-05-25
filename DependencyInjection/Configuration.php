@@ -15,9 +15,9 @@ class Configuration implements ConfigurationInterface
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
         $rootNode->children()
-            ->arrayNode('namespaces')
-                ->scalarPrototype()->end()
-                ->info('Массив namespace, которые попадут в обработку')
+            ->arrayNode('directories')
+                ->prototype('scalar')->end()
+                ->info('Массив directories, которые попадут в обработку')
             ->end();
 
         return $treeBuilder;
