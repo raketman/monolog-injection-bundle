@@ -1,0 +1,22 @@
+{
+    "name": "raketman/monolog-injection-bundle",
+    "version": "1.0.0",
+    "description": "Easy injection monolog into your classes",
+    "keywords": ["monolog", "debug"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rakeman",
+            "email": "raketmandevelop@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Raketman\\Bundle\\MonologInjectionBundle\\": "" }
+    },
+    "require": {
+        "php": ">=5.3.0",
+        "symfony/monolog-bundle": "v3.1.1",
+        "doctrine/annotations": "v1.4.0"
+    }
+}
