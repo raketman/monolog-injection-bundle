@@ -1,4 +1,4 @@
-Very easy Monolog Injector into your class
+##Very easy Monolog Injector into your class
 
 ## Usage
 
@@ -8,7 +8,6 @@ Download and include the Bundle class in your code, or install it via Composer.
 Configration example :
 
 	monolog_injection:
-	  #You can use namespaces to set visibility of this bundle 
       directories:
         - %kernel.roor_dir%.'/../src'
 
