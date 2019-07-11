@@ -10,7 +10,7 @@ Configration example :
 
 	monolog_injection:
       directories:
-        - %kernel.roor_dir%.'/../src'
+        - %kernel.root_dir%/../src
 
 
 Usage example :
