@@ -38,9 +38,16 @@ class LoggerInjectionPass implements CompilerPassInterface
         foreach ($directories as $directory) {
             /** @var SplFileInfo $file */
             foreach($finder->in($directory) as $file) {
-                $className = str_replace("/", "\\", explode('.', $file->getRelativePathname())[0]);
+                // Получим полное название класса
+                $className = str_replace(
+                    "/",
+                    "\\",
+                    sprintf('%s/%s',
+                        $this->extractNamespace($file->getPathname()),
+                        explode('.', $file->getBasename())[0]
+                    )
+                );
                 
-                // new $className;
                 $newRef = new \ReflectionClass($className);
 
                 /** @var RaketmanLogger $annotation */
@@ -54,5 +61,21 @@ class LoggerInjectionPass implements CompilerPassInterface
             }
         }
 
+    }
+
+    private function extractNamespace($file) {
+        $ns = NULL;
+        $handle = fopen($file, "r");
+        if ($handle) {
+            while (($line = fgets($handle)) !== false) {
+                if (strpos($line, 'namespace') === 0) {
+                    $parts = explode(' ', $line);
+                    $ns = rtrim(trim($parts[1]), ';');
+                    break;
+                }
+            }
+            fclose($handle);
+        }
+        return $ns;
     }
 }
