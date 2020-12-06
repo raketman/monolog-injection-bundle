@@ -10,7 +10,7 @@ Configration example :
 
 	monolog_injection:
       directories:
-        - 'path_to_observe_files
+        - 'path_to_observe_files'
 
 
 Usage example :
