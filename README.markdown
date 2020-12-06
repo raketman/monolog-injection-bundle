@@ -10,7 +10,7 @@ Configration example :
 
 	monolog_injection:
       directories:
-        - %kernel.root_dir%/../src
+        - 'path_to_observe_files'
 
 
 Usage example :
