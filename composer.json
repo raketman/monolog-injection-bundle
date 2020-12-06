@@ -1,6 +1,6 @@
 {
     "name": "raketman/monolog-injection-bundle",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Easy monolog injection into your classes",
     "keywords": ["monolog", "debug"],
     "type": "symfony-bundle",
